@@ -55,14 +55,18 @@ axios
     dataContent.forEach(element => {
       let packageMaintainers = element.package.maintainers;
       packageMaintainers.forEach(element => {
-        maintainerArray.push({
-          username: element.username,
-          packageNames: [],
-        });
+        if (!maintainerArray.includes(element.username)) {
+          maintainerArray.push(element.username);
+        }
       });
     });
 
-    maintainerArray.forEach(maintainer => {});
+    maintainerArray = maintainerArray.map(maintainer => {
+      return {
+        username: maintainer,
+        packageNames: [],
+      };
+    });
     console.log(maintainerArray);
   })
   .catch(error => {
