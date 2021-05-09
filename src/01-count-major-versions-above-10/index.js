@@ -1,3 +1,5 @@
+const { default: axios } = require('axios');
+
 /**
  * Make the following POST request with either axios or node-fetch:
 
@@ -31,6 +33,25 @@ The results should have this structure:
 
 module.exports = async function countMajorVersionsAbove10() {
   // TODO
+  let count = 0;
 
-  return count
+  return axios
+    .post('http://ambush-api.inyourarea.co.uk/ambush/intercept', {
+      url: 'https://api.npms.io/v2/search/suggestions?q=react',
+      method: 'GET',
+      return_payload: true,
+    })
+    .then(function (response) {
+      dataContent = response.data.content;
+      dataContent.forEach(element => {
+        if (parseFloat(element.package.version) > 10) {
+          // increment count by 1 if the version is greater than 10
+          count++;
+        }
+      });
+      return count;
+    })
+    .catch(error => {
+      console.log(error);
+    });
 };
