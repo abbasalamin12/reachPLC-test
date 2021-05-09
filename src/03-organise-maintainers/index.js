@@ -1,3 +1,5 @@
+const { default: axios } = require('axios');
+
 /**
  * Make the following POST request with either axios or node-fetch:
 
@@ -39,8 +41,36 @@ The results should have this structure:
  * be in alphabetical order.
  */
 
+axios
+  .post('http://ambush-api.inyourarea.co.uk/ambush/intercept', {
+    url: 'https://api.npms.io/v2/search/suggestions?q=react',
+    method: 'GET',
+    return_payload: true,
+  })
+  .then(function (response) {
+    dataContent = response.data.content;
+
+    let maintainerArray = [];
+
+    dataContent.forEach(element => {
+      let packageMaintainers = element.package.maintainers;
+      packageMaintainers.forEach(element => {
+        maintainerArray.push({
+          username: element.username,
+          packageNames: [],
+        });
+      });
+    });
+
+    maintainerArray.forEach(maintainer => {});
+    console.log(maintainerArray);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+
 module.exports = async function organiseMaintainers() {
   // TODO
 
-  return maintainers
+  return maintainers;
 };
