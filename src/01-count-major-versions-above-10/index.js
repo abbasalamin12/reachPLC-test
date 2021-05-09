@@ -32,7 +32,6 @@ The results should have this structure:
  */
 
 module.exports = async function countMajorVersionsAbove10() {
-  // TODO
   let count = 0;
 
   return axios
